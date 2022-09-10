@@ -1,0 +1,147 @@
+.section {
+  padding: 110px 70px;
+}
+
+.section__title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  font-weight: normal;
+  border-bottom: 1px solid #000000;
+  height: 49px;
+}
+
+.table {
+  margin: 70px 0 110px;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.table__cell {
+  width: 550px;
+}
+
+.table__heading {
+  margin: 0 0 26px;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+.table__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.stages {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 228px 1fr; 
+  grid-template-rows: 36px 31px;
+  gap: 0px 0px; 
+}
+
+.stages__item{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stages__item_background-color_green {
+  background-color: #2BE080;
+}
+
+.stages__item_background-color_grey {
+  background-color: #F2F2F2;
+}
+
+.stages__item_font-color-grey {
+  color: #A0A0A0;
+}
+
+.stage__description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+@media screen and (max-width: 800px) {
+  .section {
+    padding: 90px 50px;
+  }
+  
+  .table {
+    margin-bottom: 93px;
+  }
+
+  .table__heading {
+    margin-bottom: 22px;
+  }
+
+  .table__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .table__cell:last-of-type {
+    margin-left: 30px;
+  }
+
+  .stages {
+    grid-template-columns: 140px 1fr;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .section {
+    padding: 70px 18px;
+  }
+  .section__title {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .table {
+    flex-direction: column;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .table__heading {
+    margin-bottom: 16px;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .table__text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .table__cell {
+    max-width: 100%;
+  }
+
+  .table__cell:last-of-type {
+    margin-left: 0;
+    margin-top: 56px;
+  }
+
+  .stages {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .stage__description {
+    margin: 0;
+    font-size: 11px;
+    line-height: 13px;
+  }
+}
