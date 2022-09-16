@@ -1,11 +1,96 @@
 .header {
   padding: 18px 70px;
+  display: flex;
+  justify-content: space-between;
 }
+
+.header_background_blue {
+  background-color: #073042;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+}
+
+.header__link {
+  text-decoration: none;
+  color: #000000;
+  font-size: 14px;
+line-height: 18px;
+}
+
+.header__link_active {
+  font-weight: 500;
+}
+
+.header__link_type_signup {
+  margin-right: 30px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #FFFFFF;
+}
+
+.header__link_type_signin {
+  width: 76px;
+  padding: 8px 0;
+  text-align: center;
+  background: #2BE080;
+  border-radius: 3px;
+  color: #000000;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.header__link_type_movies {
+  margin-right: 20px;
+}
+
+.header__link_type_saved-movies {
+  margin-right: 50px;
+}
+
+.header__link_type_profile {
+  display: flex;
+  align-items: center;
+}
+
+.link__text {
+  margin: 0;
+  margin-right: 17px;
+}
+
+.header__icon {
+  padding: 8px;
+  background-color: #F9F9F9;
+  width: 18px;
+  height: 22px;
+}
+
+.header__menu-btn_open {
+  display: none;
+  background-image: url(../../images/open-menu-button.svg);
+  width: 44px;
+  height: 44px;
+  border: none;
+  background-color: #FFFFFF;
+}
+
 
 @media screen and (max-width: 800px) {
   .header {
     padding-left: 30px;
     padding-right: 30px;
+  }
+
+  .header__link_inactive {
+    display: none;
+  }
+
+  .header__menu-btn_open {
+    display: block;
   }
 }
 

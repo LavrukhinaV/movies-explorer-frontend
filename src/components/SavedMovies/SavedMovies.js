@@ -1,4 +1,4 @@
-import './Movies.css'
+import './SavedMovies.css'
 import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm'
 

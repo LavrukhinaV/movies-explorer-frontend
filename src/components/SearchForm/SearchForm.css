@@ -1,0 +1,120 @@
+.form_type_search {
+  display: block;
+  min-height: auto;
+  flex-direction: row;
+  min-height: 72px;
+  border-bottom: 1px solid #E8E8E8;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.form__search-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 19px;
+  padding-right: 30px;
+  margin-bottom: 69px;
+  margin-top: 70px;
+  background-color: #F9F9F9;
+  border-radius: 9px;
+}
+
+.form__label {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.form__label_type_text {
+  padding-right: 30px;
+}
+
+.form__label_type_checkbox {
+  padding-left: 29px;
+  border-left: 1px solid #E8E8E8;
+}
+
+.form__input_type_search {
+  width: 816px;
+  border-bottom: none;
+  background: transparent;
+  margin-bottom: 0;
+  font-size: 18px;
+  line-height: 20px;
+  height: 34px;
+  margin-left: -94px;
+}
+
+.form__placeholder_type_image {
+  background-image: url('../../images/icon-find.svg');
+  background-repeat: no-repeat;
+  width: 34px;
+  height: 34px;
+
+}
+
+.form__placeholder_type_text {
+  font-size: 18px;
+  line-height: 20px;
+}
+
+.form__btn {
+  width: 34px;
+  height: 34px;
+  background-image: url('../../images/find.svg');
+  border: none;
+}
+
+.form__checkbox_type_invisible {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.form__checkbox_type_visible {
+  display: inline-block;
+  vertical-align: middle;
+  width: 36px;
+  height: 22px;
+  border: none;
+}
+
+.form__checkbox_type_invisible:checked + .form__checkbox_type_visible {
+  background-image: url(../../images/checked.svg);
+}
+
+.form__checkbox_type_invisible:not(:checked) + .form__checkbox_type_visible {
+  background-image: url(../../images/unchecked.svg);
+}
+
+.form__label-text {
+  margin-left: 14px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+@media screen and (max-width: 1180px) {
+  .form_type_search {
+    max-width: 708px;
+  }
+
+  .form__input_type_search {
+    width: 428px;
+  }
+
+  .form__label_type_text {
+    padding-right: 19px;
+  }
+  
+  .form__label_type_checkbox {
+    padding-left: 20px;
+    border-left: 1px solid #E8E8E8;
+  }
+}
+
+@media screen and (max-width: 74px) {
+
+
+}

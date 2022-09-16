@@ -1,22 +1,49 @@
-import { Route, NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import './Header.css'
+import MobileMenu from '../MobileMenu/MobileMenu'
 import logo from '../../images/logo.png';
+import icon from '../../images/icon.svg'
 
+function Header(props) {
+  const { path } = useRouteMatch();
 
-function Header() {
-  return(
-    <header className="header">
-      <img className="logo" src={logo} alt="Лого сайта"/>
-      {/* <Route path='/sign-in'>
-        <NavLink to="/sign-up" activeClassName="header__link_none" className="header__link">
-          Регистрация
+  const isMain = path === '/'
+  console.log(props.isOpen)
+
+  const headerClassName = (
+    `header  ${isMain ? 'header_background_blue' : ''}`
+  );
+
+  return (
+    <header className={headerClassName}>
+      <NavLink exact to="/">
+        <img className="logo" src={logo} alt="Лого сайта"/>
+      </NavLink>
+      {isMain ? 
+      <div className="header__container">
+      <NavLink to="/signup" className="header__link header__link_type_signup">
+        Регистрация
+      </NavLink>
+      <NavLink to="/signin"className="header__link header__link_type_signin">
+        Войти
+      </NavLink>
+    </div> 
+    :
+    <div className="header__container">
+        <NavLink to="/movies" activeClassName= "header__link_active" className="header__link header__link_type_movies header__link_inactive">
+          Фильмы
         </NavLink>
-      </Route>
-      <Route path='/sign-up'>
-        <NavLink to="/sign-in" activeClassName="header__link_none" className="header__link">
-          Войти
+        <NavLink to="/saved-movies" activeClassName= "header__link_active" className="header__link header__link_type_saved-movies header__link_inactive">
+          Сохраненные фильмы
         </NavLink>
-      </Route> */}
+        <NavLink to="/profile" activeClassName= "header__link_active" className="header__link header__link_type_profile header__link_inactive">
+          <p className="link__text">Аккаунт</p>
+          <img className="header__icon" src={icon} />
+        </NavLink>
+        <button className="header__menu-btn_open" onClick={props.onHeaderMenu}/>
+        <MobileMenu isOpen={props.isOpen} onClose={props.onClose}/>
+      </div>
+    }
     </header>
   )
 }

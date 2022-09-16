@@ -6,6 +6,7 @@
   grid-template-rows: repeat(4, 1fr);
   gap: 24px 44px;
   justify-items: center;
+  padding-top: 80px;
 }
 
 .button__download-movies {
@@ -24,6 +25,7 @@ line-height: 15px;
     grid-template-rows: repeat(6, 1fr);
     max-width: 722px;
     gap: 36px 44px;
+    padding-top: 76px;
   }
 }
 
@@ -42,5 +44,6 @@ line-height: 15px;
     grid-template-rows: repeat(12, 1fr);
     max-width: 300px;
     gap: 16px;
+    padding-top: 50px;
   }
 }
