@@ -48,6 +48,11 @@
   text-decoration: none;
   color: #000000;
   grid-area: link;
+  transition: 2s;
+}
+
+.about-me__link:hover {
+  opacity: 60%;
 }
 
 .about-me__photo {

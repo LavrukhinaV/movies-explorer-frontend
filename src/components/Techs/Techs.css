@@ -67,13 +67,13 @@
 }
 
 @media screen and (max-width: 800px) {
- .section_techs  {
+  .section_techs  {
   padding: 90px 50px;
- }
+  }
 
- .seven-technologies__title {
+  .seven-technologies__title {
   margin: 80px 0 22px;
- }
+  }
 
   .cards {
     margin-top: 83px;
@@ -123,6 +123,5 @@
   .cards {
     max-width: 200px;
     margin-top: 50px;
-
   }
 }

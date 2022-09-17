@@ -1,5 +1,5 @@
 import React from 'react';
-import {useEffect, useState} from 'react';
+import { useState } from 'react';
 import { Route, Switch } from 'react-router-dom'; 
 import './App.css';
 import Footer from '../Footer/Footer'
@@ -11,7 +11,7 @@ import Register from '../Register/Register'
 import Profile from '../Profile/Profile'
 import Movies from '../Movies/Movies'
 import SavedMovies from '../SavedMovies/SavedMovies'
-import MobileMenu from '../MobileMenu/MobileMenu'
+import Preloader from '../Preloader/Preloader';
 
 function App() {
   const [isHeaderMenuOpen, setHeaderMenuOpen] = useState(false)
@@ -26,7 +26,6 @@ function App() {
 
   return (
     <div className="page">
-      
       <Switch>
         <Route exact path="/">
           <Header />

@@ -6,10 +6,7 @@ import icon from '../../images/icon.svg'
 
 function Header(props) {
   const { path } = useRouteMatch();
-
-  const isMain = path === '/'
-  console.log(props.isOpen)
-
+  const isMain = path === '/';
   const headerClassName = (
     `header  ${isMain ? 'header_background_blue' : ''}`
   );
@@ -38,7 +35,7 @@ function Header(props) {
         </NavLink>
         <NavLink to="/profile" activeClassName= "header__link_active" className="header__link header__link_type_profile header__link_inactive">
           <p className="link__text">Аккаунт</p>
-          <img className="header__icon" src={icon} />
+          <img className="header__icon" alt="Логотип" src={icon} />
         </NavLink>
         <button className="header__menu-btn_open" onClick={props.onHeaderMenu}/>
         <MobileMenu isOpen={props.isOpen} onClose={props.onClose}/>

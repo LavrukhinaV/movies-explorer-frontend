@@ -1,6 +1,6 @@
 .footer {
   padding: 79px 70px 20px;
-  margin: 0 auto;
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,9 +36,14 @@
   list-style-type: none;
 }
 
-.footer__link{
+.footer__link {
   text-decoration: none;
   color: #000000;
+  transition: 2s;
+}
+
+.footer__link:hover {
+  opacity: 60%;
 }
 
 .footer__link-item:nth-child(2n) {
@@ -85,5 +90,4 @@
   .footer__copyright {
     margin-top: 30px;
   }
-
 }

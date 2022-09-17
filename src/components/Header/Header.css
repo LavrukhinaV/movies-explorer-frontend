@@ -17,7 +17,12 @@
   text-decoration: none;
   color: #000000;
   font-size: 14px;
-line-height: 18px;
+  line-height: 18px;
+  transition: .5s;
+}
+
+.header__link:hover {
+  opacity: 60%;
 }
 
 .header__link_active {
@@ -76,8 +81,21 @@ line-height: 18px;
   height: 44px;
   border: none;
   background-color: #FFFFFF;
+  transition: 2s;
+  cursor: pointer;
 }
 
+.header__menu-btn_open:hover {
+  opacity: 60%;
+}
+
+.logo {
+  transition: 2s;
+}
+
+.logo:hover {
+  opacity: 60%;
+}
 
 @media screen and (max-width: 800px) {
   .header {

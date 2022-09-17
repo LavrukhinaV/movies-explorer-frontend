@@ -41,18 +41,28 @@
 }
 
 .form__label_type_profile {
-    top: -150x;
-    left: 10px;
-    color: silver;
+  top: -150x;
+  left: 10px;
+  color: silver;
 }
 
-.form__button_type_profile {
+.form__button_type_edit-profile {
   background: none;
   color: #000000;
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
   margin-top: 220px;
+  transition: 2s;
+}
+
+.form__button_type_edit-profile:hover {
+  opacity: 60%;
+}
+
+.form__button_type_edit-profile:disabled {
+  background-color: #FFFFFF;
+  color: #A0A0A0;
 }
 
 .form__button_type_exit {
@@ -62,6 +72,12 @@
   color: #FF3055;
   font-size: 13px;
   line-height: 16px;
+  transition: 2s;
+  cursor: pointer;
+}
+
+.form__button_type_exit:hover {
+  opacity: 60%;
 }
 
 @media screen and (max-width: 800px) {

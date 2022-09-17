@@ -19,8 +19,6 @@
 
 .portfolio__link-item {
   padding-top: 20px;
-  display: flex;
-  justify-content: space-between;
   padding-bottom: 19px;
   border-bottom: 1px solid #E8E8E8;
 }
@@ -30,11 +28,22 @@
 }
 
 .portfolio__link {
+  display: flex;
+  justify-content: space-between;
   color: #000000;
   font-size: 30px;
   line-height: 50px;
   letter-spacing: -0.04em;
   text-decoration: none;
+  transition: 2s;
+}
+
+.portfolio__link:hover {
+  opacity: 60%;
+}
+
+.portfolio__link-text {
+  margin: 0;
 }
 
 @media screen and (max-width: 800px) {

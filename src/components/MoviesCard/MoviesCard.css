@@ -14,7 +14,6 @@
   justify-items: start;
   align-items: center;
   row-gap: 9px;
-
 }
 
 .element__title {
@@ -42,10 +41,24 @@
   transition: 1s;
   cursor: pointer;
   grid-area: button-save;
+  transition: 2s;
+  cursor: pointer;
+}
+
+.element__button:hover {
+  opacity: 80%;
 }
 
 .element__button_type_saved {
   background-image: url(../../images/saved.svg);
+}
+
+.element__button_type_delete {
+  background-image: url(../../images/delete-movies.svg);
+  background-repeat: no-repeat;
+  background-color: #F9F9F9;
+  border-radius: 50%;
+  background-position: center;
 }
 
 .element__image {

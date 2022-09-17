@@ -34,7 +34,13 @@
   box-sizing: border-box;
   font-size: 14px;
   line-height: 27px;
-  margin-bottom: 24px;
+  margin-bottom: 6px;
+  transition: .5s;
+}
+
+.form__input:focus {
+  outline: 0;
+  border-bottom: 1px solid rgba(52, 86, 243, 1);
 }
 
 .form__label {
@@ -58,6 +64,15 @@
   border: none;
   cursor: pointer;
   margin-top: 197px;
+  transition: 2s;
+}
+
+.form__button:hover {
+  opacity: 80%;
+}
+
+.form__button:disabled {
+  background-color: #E8E8E8;
 }
 
 .form__question {
@@ -77,6 +92,24 @@
   color: #3456F3;
   border: none;
   background: none;
+  transition: 2s;
+  cursor: pointer;
+}
+
+.form__link:hover {
+  opacity: 60%;
+}
+
+.form__error-label {
+  color: #FF3055;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: start;
+  margin-bottom: 18px;
+}
+
+.form__error-text {
+  margin: 0;
 }
 
 @media screen and (max-width: 400px) {
