@@ -7,7 +7,7 @@
   margin-top: 66px;
   display: grid;
   grid-template-rows: auto; 
-  gap: 0px 0px; 
+  gap: 0px 49px; 
   grid-template-areas: 
     "name photo"
     "profession photo"

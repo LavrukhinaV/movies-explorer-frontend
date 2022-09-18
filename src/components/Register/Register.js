@@ -1,6 +1,7 @@
+import { NavLink } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import './Register.css'
-import logo from '../../images/logo.png';
+import logo from '../../images/logo.svg';
 
 function Register() {
   const { 
@@ -62,7 +63,7 @@ function Register() {
       </form>
       <div className="form__question">
         <p className="form__text">Уже зарегистрированы?</p>
-        <button className="form__link">Войти</button>
+        <NavLink to="/signin" className="form__link">Войти</NavLink>
       </div>
    </div>
    )

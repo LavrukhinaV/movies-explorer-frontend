@@ -56,6 +56,9 @@
 
 .mobile-menu__link:last-of-type {
   display: flex;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 92px;
 }
 
 .mobile-menu__link-text {

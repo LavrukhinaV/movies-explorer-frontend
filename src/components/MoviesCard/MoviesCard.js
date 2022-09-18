@@ -25,7 +25,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration}/>
         </article>
@@ -33,7 +33,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration2}/>
         </article>
@@ -41,7 +41,7 @@ function MoviesCard() {
             <div className="element__description">
               <h2 className="element__title">33 слова о дизайне</h2>
               <span className="element__duration">1ч 47м</span>
-              <button className="element__button element__button_type_saved"></button>
+              <button type="button" className="element__button element__button_type_saved"></button>
             </div>
             <img className="element__image" alt="Кадр из фильма" src={filmIllustration3}/>
           </article>
@@ -49,7 +49,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration4}/>
         </article>
@@ -57,7 +57,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button element__button_type_saved"></button>
+            <button type="button" className="element__button element__button_type_saved"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration5}/>
         </article>
@@ -65,7 +65,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration6}/>
         </article>
@@ -73,7 +73,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration7}/>
         </article>
@@ -81,7 +81,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration8}/>
         </article>
@@ -89,7 +89,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration9}/>
         </article>
@@ -97,7 +97,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button element__button_type_saved"></button>
+            <button type="button" className="element__button element__button_type_saved"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration10}/>
         </article>
@@ -105,7 +105,7 @@ function MoviesCard() {
             <div className="element__description">
               <h2 className="element__title">33 слова о дизайне</h2>
               <span className="element__duration">1ч 47м</span>
-              <button className="element__button"></button>
+              <button type="button" className="element__button"></button>
             </div>
             <img className="element__image" alt="Кадр из фильма" src={filmIllustration11}/>
         </article>
@@ -113,7 +113,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button"></button>
+            <button type="button" className="element__button"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration12}/>
         </article>
@@ -124,7 +124,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button element__button_type_delete"></button>
+            <button type="button" className="element__button element__button_type_delete"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration}/>
         </article>
@@ -132,7 +132,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button element__button_type_delete"></button>
+            <button type="button" className="element__button element__button_type_delete"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration2}/>
         </article>
@@ -140,7 +140,7 @@ function MoviesCard() {
           <div className="element__description">
             <h2 className="element__title">33 слова о дизайне</h2>
             <span className="element__duration">1ч 47м</span>
-            <button className="element__button element__button_type_delete"></button>
+            <button type="button" className="element__button element__button_type_delete"></button>
           </div>
           <img className="element__image" alt="Кадр из фильма" src={filmIllustration3}/>
         </article>

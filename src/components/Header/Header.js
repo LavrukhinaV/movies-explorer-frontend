@@ -1,7 +1,7 @@
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import './Header.css'
 import MobileMenu from '../MobileMenu/MobileMenu'
-import logo from '../../images/logo.png';
+import logo from '../../images/logo.svg';
 import icon from '../../images/icon.svg'
 
 function Header(props) {
@@ -21,7 +21,7 @@ function Header(props) {
       <NavLink to="/signup" className="header__link header__link_type_signup">
         Регистрация
       </NavLink>
-      <NavLink to="/signin"className="header__link header__link_type_signin">
+      <NavLink to="/signin" className="header__link header__link_type_signin">
         Войти
       </NavLink>
     </div> 
@@ -37,7 +37,7 @@ function Header(props) {
           <p className="link__text">Аккаунт</p>
           <img className="header__icon" alt="Логотип" src={icon} />
         </NavLink>
-        <button className="header__menu-btn_open" onClick={props.onHeaderMenu}/>
+        <button type="menu" className="header__menu-btn_open" onClick={props.onHeaderMenu}/>
         <MobileMenu isOpen={props.isOpen} onClose={props.onClose}/>
       </div>
     }

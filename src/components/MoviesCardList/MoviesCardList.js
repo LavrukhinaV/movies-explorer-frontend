@@ -11,7 +11,7 @@ function MoviesCardList() {
       {isMovies ?
         <>
           <MoviesCard/>
-          <button className='button__download-movies'>Ещё</button>
+          <button type="button" className='button__download-movies'>Ещё</button>
         </>
       :
         <>

@@ -52,7 +52,7 @@ function Profile() {
         </span>
         <button type="submit" className="form__button form__button_type_edit-profile" disabled={!isValid}>Редактировать</button>
       </form>
-      <button type="submit" className="form__button_type_exit">Выйти из аккаунта</button>
+      <button type="button" className="form__button_type_exit">Выйти из аккаунта</button>
    </div>
    )
  }

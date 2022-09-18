@@ -61,12 +61,16 @@
   background-image: url('../../images/find.svg');
   border: none;
   background-color: #F9F9F9;
-  transition: 2s;
+  transition: .5s;
   cursor: pointer;
 }
 
 .form__btn:hover {
   opacity: 60%;
+}
+
+.form__btn:disabled {
+  background-image: url('../../images/button-find-disabled.svg');
 }
 
 .form__checkbox_type_invisible {

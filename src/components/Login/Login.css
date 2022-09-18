@@ -94,6 +94,7 @@
   background: none;
   transition: 2s;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .form__link:hover {

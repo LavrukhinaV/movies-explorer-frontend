@@ -1,6 +1,7 @@
+import { NavLink } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import './Login.css'
-import logo from '../../images/logo.png';
+import logo from '../../images/logo.svg';
 
 function Login() {
   const { 
@@ -45,7 +46,7 @@ function Login() {
       </form>
       <div className="form__question">
         <p className="form__text">Ещё не зарегистрированы?</p>
-        <button className="form__link">Регистрация</button>
+        <NavLink to="/signup" className="form__link">Регистрация</NavLink>
       </div>
    </div>
    )
