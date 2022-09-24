@@ -19,6 +19,7 @@
   line-height: 15px;
   transition: 2s;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .button__download-movies:hover {
