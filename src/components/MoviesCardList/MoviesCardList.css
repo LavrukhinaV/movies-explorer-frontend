@@ -1,0 +1,62 @@
+.elements {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 24px 44px;
+  justify-items: center;
+  padding-top: 80px;
+}
+
+.button__download-movies {
+  align-self: center;
+  padding: 10px 0;
+  border: none;
+  width: 320px;
+  grid-column-start: 2;
+  font-size: 12px;
+  line-height: 15px;
+  transition: 2s;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.button__download-movies:hover {
+  opacity: 60%;
+}
+
+@media screen and (max-width: 1180px) {
+  .elements {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 722px;
+    gap: 36px 44px;
+    padding-top: 76px;
+  }
+
+  .button__download-movies {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
+
+@media screen and (max-width: 722px) {
+  .elements {
+    max-width: 644px;
+    gap: 36px 44px;
+  }
+}
+
+@media screen and (max-width: 644px) {
+  .elements {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+    gap: 16px;
+    padding-top: 50px;
+  }
+
+  .button__download-movies {
+    grid-column-start: 1;
+    grid-column-end: 1;
+  }
+}
