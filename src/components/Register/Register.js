@@ -1,21 +1,42 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import {withRouter} from 'react-router';
 import { useForm } from "react-hook-form";
 import './Register.css'
 import logo from '../../images/logo.svg';
 
-function Register() {
+function Register(props) {
   const { 
     register, handleSubmit, formState: { errors, isValid } 
   } = useForm({
     mode: "onBlur"
   });
 
-  const onSubmit = data => console.log(data);
+  const [formParams, setFormParams] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+    setFormParams((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  const onSubmit = () => {
+      let { name, email, password } = formParams;
+      props.handleRegister({ name, email, password })
+  }
 
   return (
     <div className="form">
       <form className="form__container" onSubmit={handleSubmit(onSubmit)}>
-        <img className="logo form__logo" src={logo} alt="Лого сайта"/>
+        <NavLink className="logo form__logo" exact to="/">
+          <img  src={logo} alt="Лого сайта"/>
+        </NavLink>
         <h1 className="form__header">Добро пожаловать!</h1>
         <label className='form__label'>Имя</label>
         <input 
@@ -30,7 +51,7 @@ function Register() {
               message: "Максимум 30 символов."
             }
           })} 
-          id="name" className="form__input" type="text"
+          id="name" className="form__input" type="text" onChange={handleChange}
         />
         <span className="form__error-label">
           {errors?.name && <p className="form__error-text">{errors?.name?.message || "Что-то пошло не так..."}</p>}
@@ -44,7 +65,7 @@ function Register() {
               message: "Поле должно содержать email"
             }
           })}
-          id="email" className="form__input" type="text"
+          id="email" className="form__input" type="text" onChange={handleChange}
         />
         <span className="form__error-label">
           {errors?.email && <p className="form__error-text">{errors?.email?.message || "Что-то пошло не так..."}</p>}
@@ -54,7 +75,7 @@ function Register() {
           {...register('password', {
             required: "Поле обязательно к заполнению."
           })}
-          id="password" className="form__input" type="password" autoComplete="on"
+          id="password" className="form__input" type="password" autoComplete="on" onChange={handleChange}
         />
         <span className="form__error-label">
           {errors?.password && <p className="form__error-text">{errors?.password?.message || "Что-то пошло не так..."}</p>}
@@ -69,4 +90,4 @@ function Register() {
    )
  }
  
- export default Register;
+ export default withRouter(Register);
