@@ -8,7 +8,6 @@ function MoviesCardList(props) {
   const isMovies = path === '/movies';
 
   const [numberMovies, setNumberMovies] = useState()
-
   const buttonClassName = (
     `${(props.movies.length>numberMovies) ? 'button__download-movies' : 'button__download-movies_disabled' }`
   )
@@ -60,20 +59,20 @@ function MoviesCardList(props) {
 
   return (
     <section className="elements">
-      {props.movies.slice(0, numberMovies).map((movie) => 
-        (<MoviesCard movie={movie} key={movie.id} onMovieSave={props.onMovieSave} savedMovies={props.savedMovies}/>)
-      )}
-      <button type="button" className={buttonClassName} onClick={handleClick}>Ещё</button>
-      {/* {isMovies ?
+      {isMovies ?
         <>
-          <MoviesCard/>
-          <button type="button" className='button__download-movies'>Ещё</button>
+          {props.movies.slice(0, numberMovies).map((movie) => 
+            (<MoviesCard movie={movie} key={movie.id} onMovieSave={props.onMovieSave} onMovieDelete={props.onMovieDelete} savedMovies={props.savedMovies} />)
+          )}
+          <button type="button" className={buttonClassName} onClick={handleClick}>Ещё</button>
         </>
       :
         <>
-          <MoviesCard/>
+          {props.movies?.map((movie) => 
+            (<MoviesCard  key={movie._id} movie={movie} savedMovies={props.movies} onMovieDelete={props.onMovieDelete}/>)
+          )}
         </>
-      } */}
+      }
     </section>
   );
 }

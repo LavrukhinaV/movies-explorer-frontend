@@ -141,9 +141,32 @@ function App() {
         findMovies.push(item)
       }
     })
-    console.log(findMovies)
-    
+
     setMovies(findMovies)
+  }
+
+  function handleSearchSavedMovies ({ textRequest, shortFilm }) {
+    console.log(textRequest)
+    let findMovies = []
+    movies.forEach((item) => {
+      if (item.nameRU?.toLowerCase().includes(textRequest)) {
+        findMovies.push(item)
+      }
+      else if (item.nameEN?.toLowerCase().includes(textRequest)) {
+        findMovies.push(item)
+      }
+      else if (item.description?.toLowerCase().includes(textRequest)) {
+        findMovies.push(item)
+      }
+      else if (item.year?.toLowerCase().includes(textRequest)) {
+        findMovies.push(item)
+      }
+      else if (item.country?.toLowerCase().includes(textRequest)) {
+        findMovies.push(item)
+      }
+    })
+
+
   }
 
   function handleMovieSave(data) {
@@ -164,9 +187,23 @@ function App() {
     mainApi.saveMovie(saveMovie)
     .then((newSavedMovies) => {
       setSavedMovies([newSavedMovies, ...savedMovies])
-      console.log(savedMovies)
     })
 
+  }
+
+  function handleMovieDelete(movie) {
+    let result = savedMovies.find(el => el.movieId === movie.id)
+    mainApi.deleteMovie(result._id)
+    .then((res) => {
+      setSavedMovies(prevMovies => prevMovies.filter(item => item._id !== res._id))
+    })
+  }
+
+  function handleDeleteSavedMovies(movie) {
+    mainApi.deleteMovie(movie._id)
+    .then((res) => {
+      setSavedMovies(prevMovies => prevMovies.filter(item => item._id !== res._id))
+    })
   }
   
   return (
@@ -180,12 +217,12 @@ function App() {
           </Route>
           <ProtectedRoute path="/movies" loggedIn={loggedIn}>
             <Header loggedIn={loggedIn} onHeaderMenu={handleHeaderMenuClick} isOpen={isHeaderMenuOpen} onClose={closeHeaderMenu}/>
-            <Movies onSearchMovies={handleSearchMovies} movies={movies} onMovieSave={handleMovieSave} savedMovies={savedMovies}/>
+            <Movies onSearchMovies={handleSearchMovies} movies={movies} onMovieSave={handleMovieSave} onMovieDelete={handleMovieDelete} savedMovies={savedMovies} searchMovies={localStorage.getItem('movies')} textRequest={JSON.parse(localStorage.getItem('textRequest'))}/>
             <Footer />
           </ProtectedRoute>
           <ProtectedRoute path="/saved-movies" loggedIn={loggedIn}>
             <Header  loggedIn={loggedIn} onHeaderMenu={handleHeaderMenuClick} isOpen={isHeaderMenuOpen} onClose={closeHeaderMenu}/>
-            <SavedMovies />
+            <SavedMovies onSearchMovies={handleSearchSavedMovies} movies={savedMovies} onMovieDelete={handleDeleteSavedMovies}/>
             <Footer />
           </ProtectedRoute>
           <ProtectedRoute path="/profile" loggedIn={loggedIn}>

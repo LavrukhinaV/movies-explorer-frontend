@@ -6,8 +6,8 @@ function Movies(props) {
 
   return (
     <main className="content">
-      <SearchForm onSearchMovies={props.onSearchMovies}/>
-      <MoviesCardList movies={props.movies} onMovieSave={props.onMovieSave} savedMovies={props.savedMovies}/>
+      <SearchForm onSearchMovies={props.onSearchMovies} textRequestFoundMovies={props.textRequest}/>
+      <MoviesCardList movies={props.movies} onMovieSave={props.onMovieSave} onMovieDelete={props.onMovieDelete} savedMovies={props.savedMovies} searchMovies={props.searchMovies}/>
   </main>
   );
 }

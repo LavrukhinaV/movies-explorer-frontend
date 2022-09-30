@@ -46,8 +46,8 @@ class MainApi {
     .then(this._checkReponse)
   }
 
-  deleteCard(id) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
+  deleteMovie(id) {
+    return fetch(`${this._baseUrl}/movies/${id}`, {
       method: "DELETE",
       headers: this._headers,
     })
@@ -70,9 +70,9 @@ class MainApi {
     .then(this._checkReponse)
   }
 
-  changeLikeCardStatus(id, isLiked) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: `${isLiked ? "PUT" : "DELETE"}`,
+  changeSaveMovie(id, isSaved) {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
+      method: `${isSaved ? "PUT" : "DELETE"}`,
       headers: this._headers,
     })
     .then(this._checkReponse)
