@@ -11,7 +11,6 @@ import Register from '../Register/Register'
 import Profile from '../Profile/Profile'
 import Movies from '../Movies/Movies'
 import SavedMovies from '../SavedMovies/SavedMovies'
-import Preloader from '../Preloader/Preloader';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import InfoTooltip from '../InfoTooltip/InfoTooltip'
@@ -21,28 +20,37 @@ import * as MoviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(false)
   const [isHeaderMenuOpen, setHeaderMenuOpen] = useState(false)
   const [isPopupTooltipOpen, setPopupTooltipOpen] = useState(false)
+  const [popupText, setPopupText] = useState("")
   const [currentUser, setCurrentUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false)
   const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-
+  const [shownMoviesOnMainPage, setShownMoviesOnMainPage] = useState(JSON.parse(localStorage.getItem('findMovies')));
+  
   const history = useHistory();
-
+  
   useEffect(() => {
+    setIsLoading(true)
     if (loggedIn) {
-    Promise.all([mainApi.getProfile(), mainApi.getMovies()])
-      .then(([userData, movies]) => {
+    Promise.all([mainApi.getProfile(), mainApi.getMovies(), MoviesApi.getMovies()])
+      .then(([userData, userMovies, movies]) => {
         setCurrentUser(userData);
-        setSavedMovies(movies)
+        setSavedMovies(userMovies)
+        localStorage.setItem('movies', JSON.stringify(movies));
       })
       .catch((err) => {
         console.log("Error: ", err);
-      });
+        setPopupText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+        setPopupTooltipOpen(true);
+      })
+      .finally(() => setIsLoading(false))
     }
   }, [loggedIn])
+
+
 
   function handleHeaderMenuClick() {
     setHeaderMenuOpen(true)
@@ -92,7 +100,7 @@ function App() {
   }
 
   const signOut = () => {
-    localStorage.removeItem('jwtToken');
+    localStorage.clear();
     setLoggedIn(false);
     history.push('/signin');
   }
@@ -106,67 +114,62 @@ function App() {
     mainApi.editProfile(newInfo)
     .then((data) => {
       setCurrentUser(data);
-      setIsSuccess(true);
+      setPopupText('Данные успешно изменены!')
       setPopupTooltipOpen(true);
     })
-    .catch(err => console.log(`Ошибка: ${err}`))
+    .catch(() => (
+      setPopupText('Что-то пошло не так! Попробуйте ещё раз.')
+    ))
   }
 
   function handleSearchMovies({ textRequest, shortFilm }) {
     localStorage.setItem('textRequest', JSON.stringify(textRequest));
     localStorage.setItem('shortFilm', JSON.stringify(shortFilm));
-    MoviesApi.getMovies()
-    .then((movies) => {
-      localStorage.setItem('movies', JSON.stringify(movies));
-      handleFilterMovies(movies, textRequest)
-    })
+
+    let movies = JSON.parse(localStorage.getItem('movies'));
+
+    if (shortFilm) {
+      const shortMovies = movies.filter((item) => item.duration <= 40);
+      console.log(shortMovies)
+      handleFilterMovies(shortMovies, textRequest)
+    } else {
+
+    handleFilterMovies(movies, textRequest)
+    }
   }
 
   function handleFilterMovies(movies, textRequest) {
     let findMovies = []
+    
     movies.forEach((item) => {
-      if (item.nameRU?.toLowerCase().includes(textRequest)) {
+      if (item.nameRU.toLowerCase().indexOf(textRequest.toLowerCase()) > -1) {
         findMovies.push(item)
-      }
-      else if (item.nameEN?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-      else if (item.description?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-      else if (item.year?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-      else if (item.country?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
+      } 
+      // else if (item.nameEN?.toLowerCase().includes(textRequest)) {
+      //   findMovies.push(item)
+      // }
+      // else if (item.description?.toLowerCase().includes(textRequest)) {
+      //   findMovies.push(item)
+      // }
+      // else if (item.year?.toLowerCase().includes(textRequest)) {
+      //   findMovies.push(item)
+      // }
+      // else if (item.country?.toLowerCase().includes(textRequest)) {
+      //   findMovies.push(item)
+      // }
     })
-
+    if (findMovies.length === 0) {
+      console.log('ничего не найдено')
+      localStorage.removeItem('findMovies')
+      setPopupText('Фильмы не найдены')
+      setPopupTooltipOpen(true);
+      setShownMoviesOnMainPage([])
+      
+    } else {
     setMovies(findMovies)
-  }
-
-  function handleSearchSavedMovies ({ textRequest, shortFilm }) {
-    console.log(textRequest)
-    let findMovies = []
-    movies.forEach((item) => {
-      if (item.nameRU?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-      else if (item.nameEN?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-      else if (item.description?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-      else if (item.year?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-      else if (item.country?.toLowerCase().includes(textRequest)) {
-        findMovies.push(item)
-      }
-    })
-
-
+    localStorage.setItem('findMovies', JSON.stringify(findMovies));
+    setShownMoviesOnMainPage(findMovies)
+    }
   }
 
   function handleMovieSave(data) {
@@ -205,6 +208,7 @@ function App() {
       setSavedMovies(prevMovies => prevMovies.filter(item => item._id !== res._id))
     })
   }
+
   
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -217,12 +221,25 @@ function App() {
           </Route>
           <ProtectedRoute path="/movies" loggedIn={loggedIn}>
             <Header loggedIn={loggedIn} onHeaderMenu={handleHeaderMenuClick} isOpen={isHeaderMenuOpen} onClose={closeHeaderMenu}/>
-            <Movies onSearchMovies={handleSearchMovies} movies={movies} onMovieSave={handleMovieSave} onMovieDelete={handleMovieDelete} savedMovies={savedMovies} searchMovies={localStorage.getItem('movies')} textRequest={JSON.parse(localStorage.getItem('textRequest'))}/>
+            <Movies
+              onSearchMovies={handleSearchMovies}
+              movies={shownMoviesOnMainPage}
+              onMovieSave={handleMovieSave}
+              onMovieDelete={handleMovieDelete}
+              savedMovies={savedMovies}
+              textRequest={JSON.parse(localStorage.getItem('textRequest'))}
+              shortFilm={JSON.parse(localStorage.getItem('shortFilm'))}
+              isLoading={isLoading}
+            />
             <Footer />
           </ProtectedRoute>
           <ProtectedRoute path="/saved-movies" loggedIn={loggedIn}>
             <Header  loggedIn={loggedIn} onHeaderMenu={handleHeaderMenuClick} isOpen={isHeaderMenuOpen} onClose={closeHeaderMenu}/>
-            <SavedMovies onSearchMovies={handleSearchSavedMovies} movies={savedMovies} onMovieDelete={handleDeleteSavedMovies}/>
+            <SavedMovies
+              movies={savedMovies}
+              onMovieDelete={handleDeleteSavedMovies}
+              isLoading={isLoading}
+            />
             <Footer />
           </ProtectedRoute>
           <ProtectedRoute path="/profile" loggedIn={loggedIn}>
@@ -245,9 +262,7 @@ function App() {
         <InfoTooltip
             isOpen={isPopupTooltipOpen}
             onClose={closePopup}
-            isSuccess={isSuccess}
-            success={'Данные успешно изменены!'}
-            error={'Что-то пошло не так! Попробуйте ещё раз.'}
+            message={popupText}
           />
       </div>
     </CurrentUserContext.Provider>

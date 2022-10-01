@@ -27,7 +27,8 @@ function MoviesCard({ movie, onMovieSave, onMovieDelete, savedMovies }) {
           <article className="element">
             <div className="element__description">
               <h2 className="element__title">{movie.nameRU}</h2>
-              <span className="element__duration">{movie.duration}</span>
+              <span className="element__duration">{`${Math.trunc(movie.duration / 60) > 0 ? `${Math.trunc(movie.duration / 60)}ч` :
+            ''} ${movie.duration % 60}м`}</span>
               <button type="button" className={cardSaveButtonClassName} onClick={handleSave}></button>
             </div>
             <a href={movie.trailerLink} target="blanck">
@@ -40,7 +41,8 @@ function MoviesCard({ movie, onMovieSave, onMovieDelete, savedMovies }) {
         <article className="element">
           <div className="element__description">
             <h2 className="element__title">{movie.nameRU}</h2>
-            <span className="element__duration">{movie.duration}</span>
+            <span className="element__duration">{`${Math.trunc(movie.duration / 60) > 0 ? `${Math.trunc(movie.duration / 60)}ч` :
+            ''} ${movie.duration % 60}м`}</span>
             <button type="button" className="element__button element__button_type_saved" onClick={handleDeleteMovie}></button>
           </div>
           <a href={movie.trailerLink} target="blanck">

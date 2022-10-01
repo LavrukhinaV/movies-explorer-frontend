@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard'
+import Preloader from '../Preloader/Preloader';
 
 function MoviesCardList(props) {
   const { path } = useRouteMatch();
@@ -11,7 +12,7 @@ function MoviesCardList(props) {
   const buttonClassName = (
     `${(props.movies.length>numberMovies) ? 'button__download-movies' : 'button__download-movies_disabled' }`
   )
-
+  
   const size = useWindowSize();
 
   useEffect(() => {
@@ -40,6 +41,7 @@ function MoviesCardList(props) {
     return windowSize;
   }
 
+
   function handleWindowResize () {
     if(size.width >= 1180) {
       setNumberMovies(12)
@@ -59,7 +61,10 @@ function MoviesCardList(props) {
 
   return (
     <section className="elements">
-      {isMovies ?
+      {props.isLoading ?
+      <Preloader isLoading={props.isLoading}/>
+      :
+      isMovies ?
         <>
           {props.movies.slice(0, numberMovies).map((movie) => 
             (<MoviesCard movie={movie} key={movie.id} onMovieSave={props.onMovieSave} onMovieDelete={props.onMovieDelete} savedMovies={props.savedMovies} />)
