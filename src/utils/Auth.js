@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.moviesexplorer.lavrukhina.nomoredomains.sbs';
 
 const checkResponse = (res) => {
   if (res.ok) {
@@ -13,7 +13,7 @@ export const register = (name, email, password) => {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Origin': 'http://localhost:3001/'
+      'Origin': 'https://moviesexplorer.lavrukhina.nomoredomains.sbs'
     },
     body: JSON.stringify({name, email, password})
   })
@@ -26,7 +26,7 @@ export const authorize = (email, password) => {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Origin': 'http://localhost:3001/'
+      'Origin': 'https://moviesexplorer.lavrukhina.nomoredomains.sbs'
     },
     body: JSON.stringify({email, password})
   })

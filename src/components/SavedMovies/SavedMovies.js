@@ -3,11 +3,11 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList'
 import SearchForm from '../SearchForm/SearchForm'
 import { useState, useEffect } from 'react';
 
-function Movies(props) {
+function SavedMovies(props) {
   const [shownFilms, setShownFilms] = useState(props.movies)
 
   useEffect(() => {
-    if (props.movies) setShownFilms(props.movies);
+    setShownFilms(props.movies);
   }, [props.movies]);
 
   function handleSearchSubmit ({textRequest, shortFilm}) {
@@ -44,4 +44,4 @@ function Movies(props) {
   );
 }
 
-export default Movies;
+export default SavedMovies;

@@ -23,7 +23,10 @@ class MainApi {
 
   getMovies() {
     return fetch(`${this._baseUrl}/movies`, {
-      headers: this._headers
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        'Content-Type': 'application/json'
+      }
     })
     .then(this._checkReponse)
   }
@@ -31,7 +34,11 @@ class MainApi {
   editProfile(newInfo) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        'Content-Type': 'application/json',
+        'Origin': 'https://moviesexplorer.lavrukhina.nomoredomains.sbs'
+      },
       body: JSON.stringify(newInfo)
     })
     .then(this._checkReponse)
@@ -40,7 +47,11 @@ class MainApi {
   saveMovie(data) {
     return fetch(`${this._baseUrl}/movies`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        'Content-Type': 'application/json',
+        'Origin': 'https://moviesexplorer.lavrukhina.nomoredomains.sbs'
+      },
       body: JSON.stringify(data)
     })
     .then(this._checkReponse)
@@ -49,18 +60,22 @@ class MainApi {
   deleteMovie(id) {
     return fetch(`${this._baseUrl}/movies/${id}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+        'Content-Type': 'application/json',
+        'Origin': 'https://moviesexplorer.lavrukhina.nomoredomains.sbs'
+      },
     })
     .then(this._checkReponse)
   }
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://api.moviesexplorer.lavrukhina.nomoredomains.sbs',
   headers: {
     authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
     'Content-Type': 'application/json',
-    'Origin': 'http://localhost:3001'
+    'Origin': 'https://moviesexplorer.lavrukhina.nomoredomains.sbs'
   }
 }); 
 

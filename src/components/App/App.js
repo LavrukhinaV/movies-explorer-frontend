@@ -27,7 +27,6 @@ function App() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false);
-  const [movies, setMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
   const [shownMoviesOnMainPage, setShownMoviesOnMainPage] = useState(JSON.parse(localStorage.getItem('findMovies')));
   
@@ -69,6 +68,7 @@ function App() {
     Auth.authorize(email, password)
       .then((data) => {
         if (data.token) {
+          setLoggedIn(true)
           localStorage.setItem('jwtToken', data.token);
           tokenCheck();
         } else {
@@ -77,7 +77,11 @@ function App() {
           setPopupTooltipOpen(true)
         }
       })
-      .catch(err => console.log(`Ошибка: ${err}`))
+      .catch(()=>{
+        setIsSuccess(false)
+        setPopupText('Что-то пошло не так! Попробуйте ещё раз.')
+        setPopupTooltipOpen(true)
+      })
   }
 
   const handleRegister = ({ name, email, password }) => {
@@ -93,8 +97,8 @@ function App() {
   }
 
   const tokenCheck = () => {
-    if (localStorage.getItem('jwtToken')){
-      let jwtToken = localStorage.getItem('jwtToken');
+    const jwtToken = localStorage.getItem('jwtToken');
+    if (jwtToken){
       Auth.getContent(jwtToken)
       .then((res) => {
         if (res){
@@ -107,8 +111,12 @@ function App() {
   }
 
   const signOut = () => {
-    localStorage.clear();
     setLoggedIn(false);
+    localStorage.clear()
+    // localStorage.removeItem('jwtToken');
+    // localStorage.removeItem('movies')
+    setShownMoviesOnMainPage([]);
+    setSavedMovies([]);
     history.push('/signin');
   }
 
@@ -132,7 +140,6 @@ function App() {
   }
 
   function handleSearchMovies({ textRequest, shortFilm }) {
-    console.log(textRequest, shortFilm)
     localStorage.setItem('textRequest', JSON.stringify(textRequest));
     localStorage.setItem('shortFilm', JSON.stringify(shortFilm));
 
@@ -162,14 +169,13 @@ function App() {
       setShownMoviesOnMainPage([])
       
     } else {
-    setMovies(findMovies)
     localStorage.setItem('findMovies', JSON.stringify(findMovies));
     setShownMoviesOnMainPage(findMovies)
     }
   }
 
   function handleMovieSave(data) {
-    const saveMovie = {
+    const savedMovie = {
     country: data.country,
     description: data.description,
     director: data.director,
@@ -183,7 +189,7 @@ function App() {
     thumbnail: `https://api.nomoreparties.co/${data.image.url}`
     }
 
-    mainApi.saveMovie(saveMovie)
+    mainApi.saveMovie(savedMovie)
     .then((newSavedMovies) => {
       setSavedMovies([newSavedMovies, ...savedMovies])
     })

@@ -15,7 +15,7 @@ function Profile(props) {
   }, [currentUser]);
   
   const { 
-    register, handleSubmit, formState: { errors, isValid }, watch
+    register, handleSubmit, formState: { errors, isValid }
   } = useForm({
     mode: "onChange"
   });
