@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import {withRouter} from 'react-router';
 import { useForm } from "react-hook-form";
@@ -7,9 +7,9 @@ import logo from '../../images/logo.svg';
 
 function Login(props) {
   const { 
-    register, handleSubmit, formState: { errors, isValid } 
+    register, handleSubmit, formState: { errors, isValid }, watch
   } = useForm({
-    mode: "onBlur"
+    mode: "onChange"
   });
 
   const [formParams, setFormParams] = useState({
@@ -17,13 +17,23 @@ function Login(props) {
     password: '',
   });
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setFormParams((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  }
+  // const handleChange = (e) => {
+  //   const {name, value} = e.target;
+  //   setFormParams((prev) => ({
+  //     ...prev,
+  //     [name]: value
+  //   }));
+  // }
+
+  const watchEmail = watch('email')
+  const watchPassword = watch('password')
+
+  useEffect(() => {
+    setFormParams({
+      email: watchEmail,
+      password: watchPassword,
+    })
+  }, [watchEmail, watchPassword])
 
   const onSubmit = () => {
     let { email, password } = formParams;
@@ -47,7 +57,8 @@ function Login(props) {
             }
           })}
             id="email" 
-            className="form__input" type="text" onChange={handleChange}
+            className="form__input"
+            type="text"
         />
         <span className="form__error-label">
           {errors?.email && <p className="form__error-text">{errors?.email?.message || "Что-то пошло не так..."}</p>}
@@ -57,7 +68,10 @@ function Login(props) {
           {...register('password', {
             required: "Поле обязательно к заполнению."
           })}
-          id="password" className="form__input" type="password" autoComplete="on" onChange={handleChange}
+          id="password"
+          className="form__input"
+          type="password"
+          autoComplete="on"
         />
         <span className="form__error-label">
           {errors?.password && <p className="form__error-text">{errors?.password?.message || "Что-то пошло не так..."}</p>}

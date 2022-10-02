@@ -26,7 +26,6 @@ function Movies(props) {
         findMovies.push(item)
       }
     })
-    console.log(findMovies)
     setShownFilms(findMovies)
   }
 

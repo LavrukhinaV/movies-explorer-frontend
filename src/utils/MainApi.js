@@ -53,30 +53,6 @@ class MainApi {
     })
     .then(this._checkReponse)
   }
-
-  deleteLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`,{
-      method: "DELETE",
-      headers: this._headers,
-    })
-    .then(this._checkReponse)
-  }
-
-  addLike(id) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: "PUT",
-      headers: this._headers,
-    })
-    .then(this._checkReponse)
-  }
-
-  changeSaveMovie(id, isSaved) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
-      method: `${isSaved ? "PUT" : "DELETE"}`,
-      headers: this._headers,
-    })
-    .then(this._checkReponse)
-  }
 }
 
 const mainApi = new MainApi({

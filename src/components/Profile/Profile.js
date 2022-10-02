@@ -4,31 +4,25 @@ import './Profile.css';
 import {CurrentUserContext} from '../../contexts/CurrentUserContext'
 
 function Profile(props) {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
 
   const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState(currentUser.name)
+  const [email, setEmail] = useState(currentUser.email)
 
   useEffect(() => {
     setName(currentUser.name || '');
     setEmail(currentUser.email || '');
   }, [currentUser]);
-
+  
   const { 
-    register, handleSubmit, formState: { errors, isValid } 
+    register, handleSubmit, formState: { errors, isValid }, watch
   } = useForm({
-    mode: "onBlur"
+    mode: "onChange"
   });
 
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
-
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  const onSubmit = () => {
+  const onSubmit = (data) => {
+    const name = data.name;
+    const email = data.email
     props.onUpdateUser({
       name,
       email,
@@ -54,7 +48,7 @@ function Profile(props) {
                 message: "Максимум 30 символов."
               }
             })}
-            id="name" className="form__input form__input_type_profile" type="text" value={name} onChange={handleChangeName}
+            id="name" className="form__input form__input_type_profile" type="text" defaultValue={name}
           />
         </label>
         <span className="form__error-label">
@@ -70,7 +64,7 @@ function Profile(props) {
                 message: "Поле должно содержать email"
               }
             })}
-            id="email" className="form__input form__input_type_profile" type="text" value={email} onChange={handleChangeEmail}
+            id="email" className="form__input form__input_type_profile" type="text" defaultValue={email}
           />
         </label>
         <span className="form__error-label">

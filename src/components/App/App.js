@@ -24,6 +24,7 @@ function App() {
   const [isHeaderMenuOpen, setHeaderMenuOpen] = useState(false)
   const [isPopupTooltipOpen, setPopupTooltipOpen] = useState(false)
   const [popupText, setPopupText] = useState("")
+  const [isSuccess, setIsSuccess] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
@@ -70,6 +71,10 @@ function App() {
         if (data.token) {
           localStorage.setItem('jwtToken', data.token);
           tokenCheck();
+        } else {
+          setIsSuccess(false)
+          setPopupText('Что-то пошло не так! Попробуйте ещё раз.')
+          setPopupTooltipOpen(true)
         }
       })
       .catch(err => console.log(`Ошибка: ${err}`))
@@ -80,8 +85,10 @@ function App() {
     .then(() => {
       handleLogin({email, password})
     })
-    .catch((err)=>{
-      console.log(`Ошибка: ${err}`)
+    .catch(()=>{
+      setIsSuccess(false)
+      setPopupText('Что-то пошло не так! Попробуйте ещё раз.')
+      setPopupTooltipOpen(true)
     })
   }
 
@@ -115,14 +122,17 @@ function App() {
     .then((data) => {
       setCurrentUser(data);
       setPopupText('Данные успешно изменены!')
+      setIsSuccess(true)
       setPopupTooltipOpen(true);
     })
-    .catch(() => (
+    .catch(() => {
       setPopupText('Что-то пошло не так! Попробуйте ещё раз.')
-    ))
+      setPopupTooltipOpen(true)
+    })
   }
 
   function handleSearchMovies({ textRequest, shortFilm }) {
+    console.log(textRequest, shortFilm)
     localStorage.setItem('textRequest', JSON.stringify(textRequest));
     localStorage.setItem('shortFilm', JSON.stringify(shortFilm));
 
@@ -130,7 +140,6 @@ function App() {
 
     if (shortFilm) {
       const shortMovies = movies.filter((item) => item.duration <= 40);
-      console.log(shortMovies)
       handleFilterMovies(shortMovies, textRequest)
     } else {
 
@@ -145,21 +154,8 @@ function App() {
       if (item.nameRU.toLowerCase().indexOf(textRequest.toLowerCase()) > -1) {
         findMovies.push(item)
       } 
-      // else if (item.nameEN?.toLowerCase().includes(textRequest)) {
-      //   findMovies.push(item)
-      // }
-      // else if (item.description?.toLowerCase().includes(textRequest)) {
-      //   findMovies.push(item)
-      // }
-      // else if (item.year?.toLowerCase().includes(textRequest)) {
-      //   findMovies.push(item)
-      // }
-      // else if (item.country?.toLowerCase().includes(textRequest)) {
-      //   findMovies.push(item)
-      // }
     })
     if (findMovies.length === 0) {
-      console.log('ничего не найдено')
       localStorage.removeItem('findMovies')
       setPopupText('Фильмы не найдены')
       setPopupTooltipOpen(true);
@@ -191,6 +187,9 @@ function App() {
     .then((newSavedMovies) => {
       setSavedMovies([newSavedMovies, ...savedMovies])
     })
+    .catch((err)=>{
+      console.log(`Ошибка: ${err}`)
+    })
 
   }
 
@@ -200,12 +199,18 @@ function App() {
     .then((res) => {
       setSavedMovies(prevMovies => prevMovies.filter(item => item._id !== res._id))
     })
+    .catch((err)=>{
+      console.log(`Ошибка: ${err}`)
+    })
   }
 
   function handleDeleteSavedMovies(movie) {
     mainApi.deleteMovie(movie._id)
     .then((res) => {
       setSavedMovies(prevMovies => prevMovies.filter(item => item._id !== res._id))
+    })
+    .catch((err)=>{
+      console.log(`Ошибка: ${err}`)
     })
   }
 
@@ -260,9 +265,10 @@ function App() {
           </Route>
         </Switch>
         <InfoTooltip
-            isOpen={isPopupTooltipOpen}
-            onClose={closePopup}
-            message={popupText}
+          isSuccess={isSuccess}
+          isOpen={isPopupTooltipOpen}
+          onClose={closePopup}
+          message={popupText}
           />
       </div>
     </CurrentUserContext.Provider>
