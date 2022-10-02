@@ -40,6 +40,7 @@ export const getContent = (token) => {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
+      'Origin': 'https://moviesexplorer.lavrukhina.nomoredomains.sbs'
     }
   })
   .then(checkResponse)
