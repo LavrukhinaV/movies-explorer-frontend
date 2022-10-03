@@ -9,29 +9,30 @@ function SearchForm({ onSearchMovies, textRequestFoundMovies, shortFilmFoundMovi
   const [focused, setFocused] = useState(true);
 
   const { 
-    register, handleSubmit, formState: { isValid }, watch
+    register, handleSubmit, formState: { errors, isValid }, watch
   } = useForm({
     mode: "onChange",
     defaultValues: { 
       textRequest: textRequestFoundMovies
-    }
-    }
+    }}
   );
   
   const watchRequest = watch('textRequest')
-  const watchSwitch = watch('switchShortMovies')
+
+  useEffect(() => (
+    onSearchMovies({ textRequest, shortFilm})
+  ), [shortFilm])
 
   useEffect(() => {
-    setTextRequest(watchRequest)
-    setShortFilm(watchSwitch)
-  }, [watchRequest, watchSwitch])
+  setTextRequest(watchRequest)
+
+  }, [watchRequest])
 
   const onSubmit = (data) => {
     setTextRequest(data.textRequest)
-    setShortFilm(data.switchShortMovies)
+    setShortFilm(shortFilm)
     onSearchMovies({ textRequest, shortFilm})
   }
-  
   
   function handleFocus(e) {
     let value = e.target.value
@@ -39,6 +40,15 @@ function SearchForm({ onSearchMovies, textRequestFoundMovies, shortFilmFoundMovi
     setFocused(false)
     }
   };
+
+  function handleChange(e) {
+    toggleCheckbox(e.target.checked);
+  }
+
+  function toggleCheckbox(checkboxStatus) {
+   setShortFilm(checkboxStatus)
+   onSearchMovies({ textRequest, shortFilm})
+  }
  
   return(
     <form name="search" className="form form_type_search" onSubmit={handleSubmit(onSubmit)}>
@@ -46,6 +56,7 @@ function SearchForm({ onSearchMovies, textRequestFoundMovies, shortFilmFoundMovi
         <label className="form__label form__label_type_text">
           <span className={`form__placeholder ${focused ? "form__placeholder_dispay_none" : "form__placeholder_type_image"}`}></span>
           <span className={`form__placeholder ${focused ? "form__placeholder_dispay_none" : "form__placeholder_type_text"}`}>Фильм</span>
+          <div className='form__container_type_search'>
           <input
             {...register('textRequest', {
               required: "Поле обязательно к заполнению.",
@@ -60,6 +71,10 @@ function SearchForm({ onSearchMovies, textRequestFoundMovies, shortFilmFoundMovi
               setFocused(true)
             }
             />
+            <span className={`${focused ? "form__error-label_type_serach-movies" : "form__error-label_display_none"}`}>
+              {errors?.textRequest && <p className="form__error-text_type_serach-movies">{errors?.textRequest?.message || "Что-то пошло не так..."}</p>}
+            </span>
+            </div>
           <button 
             type="submit"
             className={`form__btn ${focused && "form__btn_type_input-notfocused"}`}
@@ -67,11 +82,7 @@ function SearchForm({ onSearchMovies, textRequestFoundMovies, shortFilmFoundMovi
           />
         </label>
         <label className="form__label form__label_type_checkbox">
-          <input
-          {...register('switchShortMovies')}
-            type="checkbox" className="form__checkbox_type_invisible"
-            defaultChecked={shortFilmFoundMovies}
-          />
+          <input type="checkbox" onChange={handleChange} className="form__checkbox_type_invisible" defaultChecked={shortFilmFoundMovies}/>
           <span className="form__checkbox_type_visible"/>
           <span className="form__label-text">Короткометражки</span>
         </label> 

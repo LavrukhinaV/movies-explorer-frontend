@@ -14,6 +14,7 @@ import SavedMovies from '../SavedMovies/SavedMovies'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import InfoTooltip from '../InfoTooltip/InfoTooltip'
+import { SHORT_MOVIE } from '../../utils/const';
 import * as Auth from '../../utils/Auth';
 import * as MoviesApi from '../../utils/MoviesApi';
 
@@ -33,13 +34,11 @@ function App() {
   const history = useHistory();
   
   useEffect(() => {
-    setIsLoading(true)
     if (loggedIn) {
-    Promise.all([mainApi.getProfile(), mainApi.getMovies(), MoviesApi.getMovies()])
+    Promise.all([mainApi.getProfile(), mainApi.getMovies()])
       .then(([userData, userMovies, movies]) => {
         setCurrentUser(userData);
         setSavedMovies(userMovies)
-        localStorage.setItem('movies', JSON.stringify(movies));
       })
       .catch((err) => {
         console.log("Error: ", err);
@@ -107,14 +106,14 @@ function App() {
         }
       })
       .catch(err => console.log(`Ошибка: ${err}`))
+    } else {
+      signOut()
     }
   }
 
   const signOut = () => {
     setLoggedIn(false);
     localStorage.clear()
-    // localStorage.removeItem('jwtToken');
-    // localStorage.removeItem('movies')
     setShownMoviesOnMainPage([]);
     setSavedMovies([]);
     history.push('/signin');
@@ -140,17 +139,36 @@ function App() {
   }
 
   function handleSearchMovies({ textRequest, shortFilm }) {
+    
     localStorage.setItem('textRequest', JSON.stringify(textRequest));
     localStorage.setItem('shortFilm', JSON.stringify(shortFilm));
 
-    let movies = JSON.parse(localStorage.getItem('movies'));
-
-    if (shortFilm) {
-      const shortMovies = movies.filter((item) => item.duration <= 40);
-      handleFilterMovies(shortMovies, textRequest)
+    if (localStorage.getItem('movies') !== null) {
+      let movies = JSON.parse(localStorage.getItem('movies'));
+      if (shortFilm) {
+        const shortMovies = movies.filter((item) => item.duration <= SHORT_MOVIE);
+        handleFilterMovies(shortMovies, textRequest)
+      } else {
+      handleFilterMovies(movies, textRequest)
+      }
     } else {
-
-    handleFilterMovies(movies, textRequest)
+      setIsLoading(true)
+      MoviesApi.getMovies()
+      .then((movies) => {
+        localStorage.setItem('movies', JSON.stringify(movies));
+        if (shortFilm) {
+          const shortMovies = movies.filter((item) => item.duration <= SHORT_MOVIE);
+          handleFilterMovies(shortMovies, textRequest)
+        } else {
+        handleFilterMovies(movies, textRequest)
+        }
+      })
+      .catch((err) => {
+        console.log("Error: ", err);
+        setPopupText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+        setPopupTooltipOpen(true);
+      })
+      .finally(() => setIsLoading(false))
     }
   }
 
@@ -182,7 +200,7 @@ function App() {
     duration: data.duration,
     year: data.year,
     image: `https://api.nomoreparties.co/${data.image.url}`,
-    trailerLink: data.trailerLink,
+    trailerLink: `${data.nameRU!=="Боже, храни Оззи Осборна" ? data.trailerLink : "https://www.youtube.com/results?search_query=Боже%2C+храни+Оззи+Осборна"}`,
     nameRU: data.nameRU,
     nameEN: data.nameEN,
     movieId: data.id,
@@ -267,7 +285,7 @@ function App() {
             <PageError />
           </Route>
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/signin" />}
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
           </Route>
         </Switch>
         <InfoTooltip

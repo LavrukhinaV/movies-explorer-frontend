@@ -43,7 +43,7 @@ function MoviesCard({ movie, onMovieSave, onMovieDelete, savedMovies }) {
             <h2 className="element__title">{movie.nameRU}</h2>
             <span className="element__duration">{`${Math.trunc(movie.duration / 60) > 0 ? `${Math.trunc(movie.duration / 60)}ч` :
             ''} ${movie.duration % 60}м`}</span>
-            <button type="button" className="element__button element__button_type_saved" onClick={handleDeleteMovie}></button>
+            <button type="button" className="element__button element__button_type_delete " onClick={handleDeleteMovie}></button>
           </div>
           <a href={movie.trailerLink} target="blanck">
             <img className="element__image" alt="Кадр из фильма" src={movie.image}/>

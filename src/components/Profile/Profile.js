@@ -23,10 +23,10 @@ function Profile(props) {
   const onSubmit = (data) => {
     const name = data.name;
     const email = data.email
-    props.onUpdateUser({
+      props.onUpdateUser({
       name,
       email,
-    });
+    })
   }
   
 
@@ -39,9 +39,11 @@ function Profile(props) {
           <input
             {...register('name', {
               required: "Поле обязательно к заполнению.",
+              validate: value => value !== currentUser.name,
+              
               minLength: {
                 value: 2,
-                message: "Минимум 2 символов."
+                message: "Минимум 2 символов.",
               },
               maxLength: {
                 value: 30,
@@ -52,13 +54,14 @@ function Profile(props) {
           />
         </label>
         <span className="form__error-label">
-            {errors?.name && <p className="form__error-text">{errors?.name?.message || "Что-то пошло не так..."}</p>}
+            {errors?.name && <p className="form__error-text">{errors?.name?.message || "Необходимо внести новые данные"}</p>}
           </span>
         <label className="form__field">
           <span className='form__placeholder form__placeholder_type_profile'>E-mail</span>
           <input
             {...register('email', {
               required: "Поле обязательно к заполнению.",
+              validate: value => value !== currentUser.email,
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                 message: "Поле должно содержать email"
@@ -68,7 +71,7 @@ function Profile(props) {
           />
         </label>
         <span className="form__error-label">
-          {errors?.email && <p className="form__error-text">{errors?.email?.message || "Что-то пошло не так..."}</p>}
+          {errors?.email && <p className="form__error-text">{errors?.email?.message || "Необходимо внести новые данные"}</p>}
         </span>
         <button type="submit" className="form__button form__button_type_edit-profile" disabled={!isValid}>Редактировать</button>
       </form>

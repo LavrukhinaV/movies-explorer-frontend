@@ -4,6 +4,16 @@ import './MoviesCardList.css'
 import MoviesCard from '../MoviesCard/MoviesCard'
 import Preloader from '../Preloader/Preloader';
 
+import {
+  SCREEN_SIZE_MOBILE,
+  MOBILE_NUMBER_MOVIES,
+  MIDLE_NUMBER_MOVIES,
+  SCREEN_SIZE_DESKTOP,
+  DESKTOP_NUMBER_MOVIES,
+  LOAD_MORE_DESKTOP,
+  LOAD_MORE_MOBILE
+} from '../../utils/const';
+
 function MoviesCardList(props) {
   const { path } = useRouteMatch();
   const isMovies = path === '/movies';
@@ -43,20 +53,20 @@ function MoviesCardList(props) {
 
 
   function handleWindowResize () {
-    if(size.width >= 1180) {
-      setNumberMovies(12)
+    if(size.width >= SCREEN_SIZE_DESKTOP) {
+      setNumberMovies(DESKTOP_NUMBER_MOVIES)
     }
-    else if (size.width > 645) {
-      setNumberMovies(8)
+    else if (size.width > SCREEN_SIZE_MOBILE) {
+      setNumberMovies(MIDLE_NUMBER_MOVIES)
     } else {
-    setNumberMovies(5)}
+    setNumberMovies(MOBILE_NUMBER_MOVIES)}
   }
 
   function handleClick() {
-    if(size.width >= 1180) {
-      setNumberMovies(numberMovies+3)
+    if(size.width >= SCREEN_SIZE_DESKTOP) {
+      setNumberMovies(numberMovies+LOAD_MORE_DESKTOP)
     } else {
-    setNumberMovies(numberMovies+2)}
+    setNumberMovies(numberMovies+LOAD_MORE_MOBILE)}
   }
 
   return (
