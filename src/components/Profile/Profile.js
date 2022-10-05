@@ -27,6 +27,7 @@ function Profile(props) {
       name,
       email,
     })
+    
   }
   
 

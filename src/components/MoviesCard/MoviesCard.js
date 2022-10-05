@@ -31,7 +31,7 @@ function MoviesCard({ movie, onMovieSave, onMovieDelete, savedMovies }) {
             ''} ${movie.duration % 60}м`}</span>
               <button type="button" className={cardSaveButtonClassName} onClick={handleSave}></button>
             </div>
-            <a href={movie.trailerLink} target="blanck">
+            <a href={movie.trailerLink} target="_blanck">
               <img className="element__image" alt="Кадр из фильма" src={`https://api.nomoreparties.co/`+movie.image.url}/>
             </a>
           </article>
@@ -45,7 +45,7 @@ function MoviesCard({ movie, onMovieSave, onMovieDelete, savedMovies }) {
             ''} ${movie.duration % 60}м`}</span>
             <button type="button" className="element__button element__button_type_delete " onClick={handleDeleteMovie}></button>
           </div>
-          <a href={movie.trailerLink} target="blanck">
+          <a href={movie.trailerLink} target="_blanck">
             <img className="element__image" alt="Кадр из фильма" src={movie.image}/>
           </a>
         </article>

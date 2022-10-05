@@ -15,6 +15,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import InfoTooltip from '../InfoTooltip/InfoTooltip'
 import { SHORT_MOVIE } from '../../utils/const';
+import { isURL } from '../../utils/const';
 import * as Auth from '../../utils/Auth';
 import * as MoviesApi from '../../utils/MoviesApi';
 
@@ -36,7 +37,7 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
     Promise.all([mainApi.getProfile(), mainApi.getMovies()])
-      .then(([userData, userMovies, movies]) => {
+      .then(([userData, userMovies]) => {
         setCurrentUser(userData);
         setSavedMovies(userMovies)
       })
@@ -138,37 +139,44 @@ function App() {
     })
   }
 
-  function handleSearchMovies({ textRequest, shortFilm }) {
-    
-    localStorage.setItem('textRequest', JSON.stringify(textRequest));
-    localStorage.setItem('shortFilm', JSON.stringify(shortFilm));
-
-    if (localStorage.getItem('movies') !== null) {
-      let movies = JSON.parse(localStorage.getItem('movies'));
+  function searcMoviesFromLocalStorage(textRequest, shortFilm) {
+    let movies = JSON.parse(localStorage.getItem('movies'));
       if (shortFilm) {
         const shortMovies = movies.filter((item) => item.duration <= SHORT_MOVIE);
         handleFilterMovies(shortMovies, textRequest)
       } else {
       handleFilterMovies(movies, textRequest)
       }
+  }
+
+  function searcMoviesFromBeatfilmMoviesApi (textRequest, shortFilm ) {
+    setIsLoading(true)
+    MoviesApi.getMovies()
+    .then((movies) => {
+      localStorage.setItem('movies', JSON.stringify(movies));
+      if (shortFilm) {
+        const shortMovies = movies.filter((item) => item.duration <= SHORT_MOVIE);
+        handleFilterMovies(shortMovies, textRequest)
+      } else {
+      handleFilterMovies(movies, textRequest)
+      }
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      setPopupText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+      setPopupTooltipOpen(true);
+    })
+    .finally(() => setIsLoading(false))
+  }
+
+  function handleSearchMovies({ textRequest, shortFilm }) {
+    localStorage.setItem('textRequest', JSON.stringify(textRequest));
+    localStorage.setItem('shortFilm', JSON.stringify(shortFilm));
+
+    if (localStorage.getItem('movies') !== null) {
+      searcMoviesFromLocalStorage(textRequest, shortFilm)
     } else {
-      setIsLoading(true)
-      MoviesApi.getMovies()
-      .then((movies) => {
-        localStorage.setItem('movies', JSON.stringify(movies));
-        if (shortFilm) {
-          const shortMovies = movies.filter((item) => item.duration <= SHORT_MOVIE);
-          handleFilterMovies(shortMovies, textRequest)
-        } else {
-        handleFilterMovies(movies, textRequest)
-        }
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-        setPopupText('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-        setPopupTooltipOpen(true);
-      })
-      .finally(() => setIsLoading(false))
+      searcMoviesFromBeatfilmMoviesApi (textRequest, shortFilm )
     }
   }
 
@@ -193,6 +201,7 @@ function App() {
   }
 
   function handleMovieSave(data) {
+
     const savedMovie = {
     country: data.country,
     description: data.description,
@@ -200,7 +209,7 @@ function App() {
     duration: data.duration,
     year: data.year,
     image: `https://api.nomoreparties.co/${data.image.url}`,
-    trailerLink: `${data.nameRU!=="Боже, храни Оззи Осборна" ? data.trailerLink : "https://www.youtube.com/results?search_query=Боже%2C+храни+Оззи+Осборна"}`,
+    trailerLink: `${isURL(data.trailerLink) ? data.trailerLink : "https://www.youtube.com/"}`,
     nameRU: data.nameRU,
     nameEN: data.nameEN,
     movieId: data.id,
@@ -214,7 +223,6 @@ function App() {
     .catch((err)=>{
       console.log(`Ошибка: ${err}`)
     })
-
   }
 
   function handleMovieDelete(movie) {

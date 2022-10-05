@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import './SearchForm.css'
+import { useComponentDidMount } from '../../utils/const'
 
-function SearchForm({ onSearchMovies, textRequestFoundMovies, shortFilmFoundMovies }) {
+function SearchForm({ onSearchMovies,  textRequestFoundMovies, shortFilmFoundMovies }) {
 
   const [textRequest, setTextRequest] = useState(textRequestFoundMovies)
   const [shortFilm, setShortFilm] = useState(shortFilmFoundMovies)
@@ -19,13 +20,17 @@ function SearchForm({ onSearchMovies, textRequestFoundMovies, shortFilmFoundMovi
   
   const watchRequest = watch('textRequest')
 
-  useEffect(() => (
-    onSearchMovies({ textRequest, shortFilm})
-  ), [shortFilm])
+  const isComponentMounted = useComponentDidMount();
 
   useEffect(() => {
-  setTextRequest(watchRequest)
+    if(isComponentMounted) {
+      onSearchMovies({ textRequest, shortFilm})
+    }
+  }, [shortFilm])
 
+
+  useEffect(() => {
+    setTextRequest(watchRequest)
   }, [watchRequest])
 
   const onSubmit = (data) => {
