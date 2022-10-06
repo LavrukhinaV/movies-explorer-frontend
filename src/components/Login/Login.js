@@ -16,15 +16,7 @@ function Login(props) {
     email: '',
     password: '',
   });
-
-  // const handleChange = (e) => {
-  //   const {name, value} = e.target;
-  //   setFormParams((prev) => ({
-  //     ...prev,
-  //     [name]: value
-  //   }));
-  // }
-
+  
   const watchEmail = watch('email')
   const watchPassword = watch('password')
 

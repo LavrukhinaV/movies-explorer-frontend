@@ -12,7 +12,7 @@ function SearchForm({ onSearchMovies,  textRequestFoundMovies, shortFilmFoundMov
   const { 
     register, handleSubmit, formState: { errors, isValid }, watch
   } = useForm({
-    mode: "onChange",
+    // mode: "onChange",
     defaultValues: { 
       textRequest: textRequestFoundMovies
     }}
@@ -83,7 +83,7 @@ function SearchForm({ onSearchMovies,  textRequestFoundMovies, shortFilmFoundMov
           <button 
             type="submit"
             className={`form__btn ${focused && "form__btn_type_input-notfocused"}`}
-            disabled={!isValid}
+            // disabled={!isValid}
           />
         </label>
         <label className="form__label form__label_type_checkbox">

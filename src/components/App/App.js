@@ -106,18 +106,22 @@ function App() {
           history.push('/movies')
         }
       })
-      .catch(err => console.log(`Ошибка: ${err}`))
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`)
+        signOut()
+      })
     } else {
       signOut()
     }
   }
 
   const signOut = () => {
+
     setLoggedIn(false);
     localStorage.clear()
     setShownMoviesOnMainPage([]);
     setSavedMovies([]);
-    history.push('/signin');
+    history.push('/');
   }
 
   useEffect(() => {
@@ -252,7 +256,7 @@ function App() {
       <div className="page">
         <Switch>
           <Route exact path="/">
-            <Header loggedIn={loggedIn}/>
+            <Header loggedIn={loggedIn} onHeaderMenu={handleHeaderMenuClick} isOpen={isHeaderMenuOpen} onClose={closeHeaderMenu}/>
             <Main warn="true"/>
             <Footer />
           </Route>
@@ -293,7 +297,7 @@ function App() {
             <PageError />
           </Route>
           <Route exact path="/">
-            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/" />}
+            {loggedIn ? <Redirect to="/movies" /> : <Redirect to="/"/>}
           </Route>
         </Switch>
         <InfoTooltip
