@@ -1,40 +1,64 @@
 import { useForm } from "react-hook-form";
+import {useEffect, useState, useContext} from 'react';
 import './Profile.css';
+import {CurrentUserContext} from '../../contexts/CurrentUserContext'
 
-function Profile() {
+function Profile(props) {
+
+  const currentUser = useContext(CurrentUserContext);
+  const [name, setName] = useState(currentUser.name)
+  const [email, setEmail] = useState(currentUser.email)
+
+  useEffect(() => {
+    setName(currentUser.name || '');
+    setEmail(currentUser.email || '');
+  }, [currentUser]);
+  
   const { 
-    register, handleSubmit, formState: { errors, isValid } 
+    watch, register, handleSubmit, formState: { errors, isValid }
   } = useForm({
-    mode: "onBlur"
+    mode: "onChange"
   });
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = (data) => {
+    const name = data.name;
+    const email = data.email
+      props.onUpdateUser({
+      name,
+      email,
+    })
+  }
+
+  const watchName = watch('name')
+  const watchEmail = watch('email')
+
+  const isInputsValidaty = (isValid && (currentUser.name !== watchName || currentUser.email !== watchEmail));
 
   return (
     <div className="form">
       <form className="form__container form__container_type_profile" onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="form__header form__header_type_profile">Привет, Виталий!</h1>
-        <label class="form__field">
+        <h1 className="form__header form__header_type_profile">Привет, {currentUser.name}!</h1>
+        <label className="form__field">
           <span className='form__placeholder form__placeholder_type_profile'>Имя</span>
           <input
             {...register('name', {
               required: "Поле обязательно к заполнению.",
               minLength: {
                 value: 2,
-                message: "Минимум 2 символов."
+                message: "Минимум 2 символов.",
               },
               maxLength: {
                 value: 30,
                 message: "Максимум 30 символов."
               }
             })}
-            id="name" className="form__input form__input_type_profile" type="text"
+            id="name" className="form__input form__input_type_profile" type="text" defaultValue={name}
           />
         </label>
         <span className="form__error-label">
             {errors?.name && <p className="form__error-text">{errors?.name?.message || "Что-то пошло не так..."}</p>}
           </span>
-        <label class="form__field">
+        <label className="form__field">
           <span className='form__placeholder form__placeholder_type_profile'>E-mail</span>
           <input
             {...register('email', {
@@ -44,15 +68,15 @@ function Profile() {
                 message: "Поле должно содержать email"
               }
             })}
-            id="email" className="form__input form__input_type_profile" type="text"
+            id="email" className="form__input form__input_type_profile" type="text" defaultValue={email}
           />
         </label>
         <span className="form__error-label">
           {errors?.email && <p className="form__error-text">{errors?.email?.message || "Что-то пошло не так..."}</p>}
         </span>
-        <button type="submit" className="form__button form__button_type_edit-profile" disabled={!isValid}>Редактировать</button>
+        <button type="submit" className="form__button form__button_type_edit-profile" disabled={!isInputsValidaty ? true : false}>Редактировать</button>
       </form>
-      <button type="button" className="form__button_type_exit">Выйти из аккаунта</button>
+      <button type="button" className="form__button_type_exit" onClick={props.handleSignOut}>Выйти из аккаунта</button>
    </div>
    )
  }

@@ -4,17 +4,19 @@
   border-bottom: 1px solid #E8E8E8;
   max-width: 1140px;
   margin: 0 auto;
+  
 }
 
 .form__search-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 1fr;
   padding: 19px;
   padding-right: 30px;
   margin-bottom: 69px;
   margin-top: 70px;
   background-color: #F9F9F9;
   border-radius: 9px;
+  
 }
 
 .form__label {
@@ -24,6 +26,7 @@
 }
 
 .form__label_type_text {
+  width: 100%;
   padding-right: 30px;
 }
 
@@ -33,14 +36,14 @@
 }
 
 .form__input_type_search {
-  width: 816px;
+  width: 100%;
   border-bottom: none;
   background: transparent;
   margin-bottom: 0;
   font-size: 18px;
   line-height: 20px;
   height: 34px;
-  margin-left: -94px;
+  transition: 0;
 }
 
 .form__placeholder_type_image {
@@ -55,14 +58,43 @@
   line-height: 20px;
 }
 
+.form__placeholder_dispay_none {
+  display: none;
+}
+
+.form__container_type_search {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.form__error-label_display_none {
+  display: none;
+}
+
+.form__error-label_type_serach-movies {
+  margin: 0;
+}
+
+.form__error-text_type_serach-movies {
+  margin: 0;
+}
+
 .form__btn {
-  width: 34px;
+  width: 36px;
   height: 34px;
   background-image: url('../../images/find.svg');
   border: none;
   background-color: #F9F9F9;
-  transition: .5s;
   cursor: pointer;
+  background-repeat: no-repeat;
+  margin-right: 30px;
+  margin-left: -150px;
+}
+
+.form__btn_type_input-notfocused {
+  margin-left: -0;
 }
 
 .form__btn:hover {
@@ -104,16 +136,10 @@
 }
 
 @media screen and (max-width: 1180px) {
-  .form_type_search {
-    max-width: 708px;
-  }
 
-  .form__input_type_search {
-    width: 428px;
-  }
-
-  .form__label_type_text {
-    padding-right: 19px;
+  .form__search-container {
+    margin-right: 30px;
+    margin-left: 30px;
   }
   
   .form__label_type_checkbox {
@@ -129,24 +155,19 @@
     grid-template-columns: 1fr;
     background-color: #FFFFFF;
     padding: 0;
-  }
-
-  .form_type_search {
-    max-width: 500px;
+    justify-items: center;
   }
 
   .form__label_type_text {
     background-color: #F9F9F9;
     border-radius: 9px;
     padding: 19px;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .form__placeholder_type_text {
     font-size: 14px;
-  }
-
-  .form__input_type_search {
-    margin-left: -45px;
   }
 
   .form__placeholder_type_image {
@@ -157,15 +178,5 @@
     justify-content: center;
     border: none;
     margin-top: 46px;
-  }
-}
-
-@media screen and (max-width: 520px) {
-  .form_type_search {
-    max-width: 300px;
-  }
-
-  .form__input_type_search {
-    width: 228px;
   }
 }

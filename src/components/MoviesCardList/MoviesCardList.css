@@ -22,6 +22,10 @@
   border-radius: 6px;
 }
 
+.button__download-movies_disabled {
+  display: none;
+}
+
 .button__download-movies:hover {
   opacity: 60%;
 }
