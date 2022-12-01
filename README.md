@@ -2,9 +2,11 @@
 Фронтенд часть дипломного проекта Я.Практикум `MoviesExplorer` - сервис, в котором можно найти фильмы по запросу и сохранить в личном кабинете.
 
 `Ссылка на макет Figma:`
+
 https://disk.yandex.ru/d/DR8grt_oAp_pjw
 
 `Ссылка на сайт:`
+
 https://moviesexplorer.lavrukhina.nomoredomains.sbs
 
 ### *Функционал проекта*
@@ -23,4 +25,5 @@ https://user-images.githubusercontent.com/94749198/198026090-b9fa2867-4256-4366-
 
 ### *Запуск проекта:*
 `npm i` — установка зависимостей
+
 `npm run start` — запускает приложение
